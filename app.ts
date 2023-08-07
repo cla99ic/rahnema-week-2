@@ -1,4 +1,4 @@
-import express from 'express'
+import express, { Response } from 'express'
 import path from 'path'
 import fs from 'fs'
 import { getAllFilePaths } from './src/tools/file'
@@ -34,4 +34,9 @@ const loadRouters = async () => {
 }
 
 loadRouters()
+
+export const send = (res: Response, body: any, status = 200) => {
+    res.status(status).send(body)
+}
+
 createMockData()

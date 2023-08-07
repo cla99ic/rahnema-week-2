@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express'
 import { findUserByCredentials, findUserByToken, updateUser } from '../repository/user'
 import { genRandomString } from '../tools/str'
+import { send } from '../../app'
 
 export const authMiddleware = (req: Request, res: Response, next: NextFunction) => {
     if (req.header('Authorization')) {
@@ -10,7 +11,7 @@ export const authMiddleware = (req: Request, res: Response, next: NextFunction) 
             return next()
         }
     }
-    return res.status(401).send({ error: 'Unauthorized' })
+    send(res, { error: 'Unauthorized' }, 401)
 }
 
 export const login = (username: string, password: string) => {
