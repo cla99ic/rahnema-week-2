@@ -1,10 +1,10 @@
-import { User } from '../../routes/user.route'
 import { ForbiddenError, HttpError, NotFoundError } from '../../utility/http-error'
 import { CreateProgramDto } from '../program/dto/create-program.dto'
 import { Program } from '../program/model/program'
+import { User } from '../user/model/user'
 import { CreatePlanDto } from './dto/create-plan.dto'
 import { Plan } from './model/plan'
-import { PlanRepository } from './plan-repository'
+import { PlanRepository } from './plan.repository'
 
 export class PlanService {
     private planRepo: PlanRepository
