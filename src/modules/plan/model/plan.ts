@@ -5,5 +5,6 @@ export interface Plan {
     title: string
     description: string
     deadline: Date
+    votingDeadline: Date
     programs: Program[]
 }

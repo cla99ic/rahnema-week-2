@@ -7,10 +7,13 @@ import { Plan } from './model/plan'
 import { PlanRepository } from './plan.repository'
 
 export class PlanService {
+    
     private planRepo: PlanRepository
+
     constructor() {
         this.planRepo = new PlanRepository()
     }
+
     getPlanById(planId: number) {
         const plan = this.planRepo.findById(planId)
         if (plan === undefined) {
@@ -18,11 +21,25 @@ export class PlanService {
         }
         return plan
     }
+
+    getProgramById(planId: number, programId: number): Program {
+        const plan = this.planRepo.findById(planId)
+        if (plan === undefined) {
+            throw new NotFoundError()
+        }
+        const program = plan.programs.find((a) => a.id == programId)
+        if (program === undefined) {
+            throw new NotFoundError()
+        }
+        return program
+    }
+
     createPlan(dto: CreatePlanDto, loggedInUser: User): Plan {
         const plan = {
             title: dto.title,
             description: dto.description || '',
             deadline: dto.deadline,
+            votingDeadline: dto.votingDeadline,
             programs: [],
         }
 
@@ -54,6 +71,12 @@ export class PlanService {
         } else {
             throw new HttpError(400, 'program is not valid')
         }
+    }
+
+    increaseProgramVote(planId: number, programId: number) {
+        const program = this.getProgramById(planId, programId)
+        program.votes = program.votes + 1
+        return program
     }
 
     public canCreateProgram(user: User, plan: Plan): boolean {

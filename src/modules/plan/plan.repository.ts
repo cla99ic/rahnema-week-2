@@ -5,6 +5,7 @@ export interface CreatePlan {
     title: string
     description: string
     deadline: Date
+    votingDeadline: Date
     programs: Program[]
 }
 
@@ -34,6 +35,7 @@ export class PlanRepository {
 
     public addProgram(plan: Plan, program: CreateProgram): Program {
         const newProgram: Program = {
+            votes: 0,
             id: plan.programs.length + 1,
             description: program.description,
             planId: plan.id,

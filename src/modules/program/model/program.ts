@@ -4,4 +4,5 @@ export interface Program {
     title: string
     description: string
     userId: string
+    votes: number
 }
